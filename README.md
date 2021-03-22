@@ -7,6 +7,7 @@ StatefulSet file for full geth nodes used as peers for light clients
 StatefulSet file for fast geth nodes that can be used as peers for light clients
 
 Check the differences between `full` and `fast`:
+
 - full sync downloads all blocks of the blockchain and replays all transactions that ever happened. While doing so, it stores the receipts of transactions and continuously updates the state database.
 
 - fast sync does not replay transactions. Instead of processing the entire block-chain one link at a time, and replay all transactions that ever happened in history, fast syncing downloads the transaction receipts along the blocks, and pulls an entire recent state database.
@@ -18,9 +19,10 @@ Make sure you understand the geth parameters from [here]: https://geth.ethereum.
 ---
 ### Requirements
 
-`docker` installed
-`kubectl` installed and linked to your cluster (inside install.sh we use kubectl with default config file, if you use another config file maybe do a local alias `alias kubectl=kubectl --kubeconfig=...`
-`geth` namespace not created on your cluster. If it is and you can not delete it then comment first line in the install.sh (`kubectl create namespace geth`)
+- `docker` installed
+
+- `kubectl` installed and linked to your cluster (inside install.sh we use kubectl with default config file, if you use another config file maybe do a local alias `alias kubectl=kubectl --kubeconfig=...`
+- `geth` namespace not created on your cluster. If it is and you can not delete it then comment first line in the install.sh (`kubectl create namespace geth`)
 
  
 ---
