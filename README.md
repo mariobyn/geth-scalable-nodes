@@ -1,5 +1,7 @@
 ### Scaling Light Geth clients to process multiple transactions using Full/Fast nodes as peers.
 
+![architecture](https://raw.githubusercontent.com/mariobyn/geth-scaling-nodes/main/architecture.png "Light/Full geth clients architecture")
+
 Dockerfiles for fast/light/full geth clients
 
 StatefulSet file for full geth nodes used as peers for light clients
