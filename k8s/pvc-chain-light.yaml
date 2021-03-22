@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: geth-chaindata-light-testnet
+  namespace: geth
+  labels:
+    app: geth-light
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: gp2
+  volumeMode: Filesystem

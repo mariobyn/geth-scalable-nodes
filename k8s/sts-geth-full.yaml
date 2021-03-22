@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: geth-full-sv
+  namespace: geth
+  labels:
+    app: geth-full
+spec:
+  ports:
+  - port: 50505
+    name: rpc
+  clusterIP: None
+  selector:
+    app: geth-full
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: geth-testnet-full-sts
+  namespace: geth-full
+spec:
+  selector:
+    matchLabels:
+      app: geth-full # has to match .spec.template.metadata.labels
+  serviceName: "geth-full-sv"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: geth-full # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: geth-full
+        image: {{image}}-full
+        ports:
+        - containerPort: 50505
+          name: rpc
+        volumeMounts:
+        - name: geth-chaindata-testnet-full
+          mountPath: /root/.ethereum/testnet/geth/chaindata/
+  volumeClaimTemplates:
+  - metadata:
+      name: geth-chaindata-testnet-full
+      namespace: geth
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "gp2"
+      resources:
+        requests:
+          storage: 1000Gi

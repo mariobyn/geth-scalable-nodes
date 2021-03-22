@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: geth-light-sv
+  namespace: geth
+  labels:
+    app: geth-light
+spec:
+  ports:
+  - port: 50505
+    name: rpc
+  selector:
+    app: geth-light

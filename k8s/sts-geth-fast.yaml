@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: geth-fast-sv
+  namespace: geth
+  labels:
+    app: geth-fast
+spec:
+  ports:
+  - port: 50505
+    name: rpc
+  clusterIP: None
+  selector:
+    app: geth-fast
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: geth-testnet-fast-sts
+  namespace: geth-fast
+spec:
+  selector:
+    matchLabels:
+      app: geth-fast # has to match .spec.template.metadata.labels
+  serviceName: "geth-fast-sv"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: geth-fast # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: geth-fast
+        image: {{image}}-fast
+        ports:
+        - containerPort: 50505
+          name: rpc
+        volumeMounts:
+        - name: geth-chaindata-testnet-fast
+          mountPath: /root/.ethereum/testnet/geth/chaindata/
+  volumeClaimTemplates:
+  - metadata:
+      name: geth-chaindata-testnet-fast
+      namespace: geth
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "gp2"
+      resources:
+        requests:
+          storage: 1000Gi
