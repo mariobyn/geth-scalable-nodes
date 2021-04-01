@@ -1,45 +1,45 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: geth-fast-sv
+  name: geth-snap-sv
   namespace: geth
   labels:
-    app: geth-fast
+    app: geth-snap
 spec:
   ports:
   - port: 50505
     name: rpc
   clusterIP: None
   selector:
-    app: geth-fast
+    app: geth-snap
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: geth-testnet-fast-sts
+  name: geth-testnet-snap-sts
   namespace: geth
 spec:
   selector:
     matchLabels:
-      app: geth-fast # has to match .spec.template.metadata.labels
-  serviceName: "geth-fast-sv"
+      app: geth-snap # has to match .spec.template.metadata.labels
+  serviceName: "geth-snap-sv"
   replicas: 1 # by default is 1
   template:
     metadata:
       labels:
-        app: geth-fast # has to match .spec.selector.matchLabels
+        app: geth-snap # has to match .spec.selector.matchLabels
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-      - name: geth-fast
-        image: {{image}}-fast
+      - name: geth-snap
+        image: {{image}}-snap
         ports:
         - containerPort: 50505
           name: custom-rpc
         - containerPort: 30303
           name: rpc
         volumeMounts:
-        - name: geth-chaindata-testnet-fast
+        - name: geth-chaindata-testnet-snap
           mountPath: /root/.ethereum/testnet/geth/chaindata/
         resources:
           requests:
@@ -50,11 +50,11 @@ spec:
             cpu: "2"
   volumeClaimTemplates:
   - metadata:
-      name: geth-chaindata-testnet-fast
+      name: geth-chaindata-testnet-snap
       namespace: geth
     spec:
       accessModes: ["ReadWriteOnce"]
       storageClassName: "gp2"
       resources:
         requests:
-          storage: 1000Gi
+          storage: 400Gi #change this accordingly

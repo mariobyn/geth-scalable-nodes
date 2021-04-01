@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: geth-deploy-light-rinkeby
+  namespace: geth
+  labels:
+    app: geth-light-rinkeby
+spec:
+  selector:
+    matchLabels:
+      app: geth-light-rinkeby # has to match .spec.template.metadata.labels
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: geth-light-rinkeby # has to match .spec.selector.matchLabels
+    spec:
+      volumes:
+      - name: geth-keystore-testnet-rinkeby #used for ropsten testnet so named the volumes with testnet
+        persistentVolumeClaim:
+          claimName: geth-keystore-testnet-rinkeby
+      - name: geth-chaindata-light-testnet-rinkeby
+        persistentVolumeClaim:
+          claimName: geth-chaindata-light-testnet-rinkeby
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: geth-light-rinkeby
+        image: {{image}}-light-rinkeby
+        imagePullPolicy: Always #you can delete this config, i was using it when developing
+        env:
+          - name: ADDITIONAL_PARAMS
+            value: ""
+        ports:
+        - containerPort: 50505
+          name: rpc
+        volumeMounts:
+          - name: geth-keystore-testnet-rinkeby
+            mountPath: /root/.ethereum/rinkeby/keystore
+          - name: geth-chaindata-light-testnet-rinkeby
+            mountPath: /root/.ethereum/rinkeby/geth/chaindata
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "1"
+          limits:
+            memory: "6Gi"
+            cpu: "2"

@@ -18,7 +18,7 @@ echo "ipcpath: ${ipcpath}"
 
 /usr/local/bin/geth \
     --cache 3072 \
-    --syncmode fast \
+    --syncmode snap \
     --rpc \
     --rpccorsdomain "*" \
     --rpcapi "web3,eth,net,personal,admin" \

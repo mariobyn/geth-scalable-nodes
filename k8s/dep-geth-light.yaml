@@ -33,3 +33,10 @@ spec:
         volumeMounts:
           - name: geth-keystore-testnet
             mountPath: /root/.ethereum/testnet/keystore
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2"
+          limits:
+            memory: "6Gi"
+            cpu: "2"

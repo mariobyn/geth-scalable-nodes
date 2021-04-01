@@ -9,7 +9,7 @@ else
     additionalParams+=($ADDITIONAL_PARAMS)
 fi
 
-additionalParams+=(--ropsten)
+additionalParams+=(--rinkeby)
 
 ipcpath=/root/.ethereum/geth.ipc
 
