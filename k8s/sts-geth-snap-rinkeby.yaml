@@ -33,6 +33,7 @@ spec:
       containers:
       - name: geth-snap-rinkeby
         image: {{image}}-snap-rinkeby
+        imagePullPolicy: Always
         ports:
         - containerPort: 50505
           name: custom-rpc

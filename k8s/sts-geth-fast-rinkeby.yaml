@@ -33,6 +33,7 @@ spec:
       containers:
       - name: geth-fast-rinkeby
         image: {{image}}-fast-rinkeby
+        imagePullPolicy: Always 
         ports:
         - containerPort: 50505
           name: custom-rpc

@@ -33,6 +33,7 @@ spec:
       containers:
       - name: geth-snap
         image: {{image}}-snap
+        imagePullPolicy: Always
         ports:
         - containerPort: 50505
           name: custom-rpc

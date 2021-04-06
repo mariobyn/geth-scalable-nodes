@@ -40,5 +40,8 @@ You can open as many Light clients as you want, and connect them to the full/fas
 - Exec into the light node and run `geth attach` then `admin.addTrustedPeer(ENODE_VALUE_FROM_ABOVE)`  where ENODE_VALUE_FROM_ABOVE is the enode value you got from the full/fast node from the above step.
 - To check if the node has been added to the peer list, run `admin.peers` and you should see the above node 
 
+### Updates
+Added private eth nodes (they are not added yet into the install.sh)
+
 ### Improvements
 Helm implementation it will get rid of lots of hardcoded stuff

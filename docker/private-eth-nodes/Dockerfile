@@ -1,0 +1,30 @@
+FROM  ethereum/client-go:v1.10.1
+
+ENV GETH_USER root
+ENV GETH_PASSWORD $GETH_PASSWORD
+ENV GETH_HOME /$GETH_USER
+ENV TEST_NET true 
+ENV HEIGHT_THRESHOLD 100 
+ 
+
+RUN apk --update add --no-cache openssh bash  git nodejs nodejs-npm && \
+  mkdir monitor && \
+  echo "${GETH_USER}:${GETH_PASSWORD}" | chpasswd && \
+  rm -rf /var/cache/apk/* && \
+  sed -ie 's/#Port 22/Port 3333/g' /etc/ssh/sshd_config && \
+  sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config && \
+  /usr/bin/ssh-keygen -A
+
+WORKDIR /root/geth
+ADD genesis.json .
+
+RUN geth --datadir "./db" init genesis.json
+
+ADD docker-entrypoint.sh .
+RUN chmod a+x ./docker-entrypoint.sh
+
+EXPOSE 50505
+EXPOSE 3333
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
+

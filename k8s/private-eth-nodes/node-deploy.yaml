@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: geth-deploy-private
+  namespace: geth
+  labels:
+    app: geth-private
+spec:
+  selector:
+    matchLabels:
+      app: geth-private # has to match .spec.template.metadata.labels
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: geth-private # has to match .spec.selector.matchLabels
+    spec:
+      volumes:
+      - name: geth-keystore-private #used for ropsten testnet so named the volumes with testnet
+        persistentVolumeClaim:
+          claimName: geth-keystore-private
+      - name: geth-chaindata-private
+        persistentVolumeClaim:
+          claimName: geth-chaindata-private
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: geth-private
+        image: mariobyn/geth-private-node:1.0
+        imagePullPolicy: Always #you can delete this config, i was using it when developing
+        env:
+          - name: ADDITIONAL_PARAMS
+            value: 
+        ports:
+        - containerPort: 50505
+          name: rpc
+        volumeMounts:
+          - name: geth-keystore-private
+            mountPath: /root/geth/db/geth/keystore
+          - name: geth-chaindata-private
+            mountPath: /root/geth/db/geth/chaindata
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1"
+          limits:
+            memory: "4Gi"
+            cpu: "2"

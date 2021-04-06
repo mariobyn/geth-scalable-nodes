@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: geth-private-sv
+  namespace: geth
+  labels:
+    app: geth-private
+spec:
+  ports:
+  - port: 50505
+    name: custom-rpc
+  clusterIP: None
+  selector:
+    app: geth-private
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: geth-private-sts
+  namespace: geth
+  labels:
+    app: geth-private
+spec:
+  selector:
+    matchLabels:
+      app: geth-private # has to match .spec.template.metadata.labels
+  serviceName: "geth-private-sv"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: geth-private # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: geth-private
+        image: mariobyn/geth-private-node:1.0
+        imagePullPolicy: Always #this was just for testing
+        ports:
+        - containerPort: 50505
+          name: custom-rpc
+        - containerPort: 30303
+          name: rpc
+        volumeMounts:
+        - name: geth-keystore-private
+          mountPath: /root/geth/db/geth/keystore
+        - name: geth-chaindata-private
+          mountPath: /root/geth/db/geth/chaindata
+  volumeClaimTemplates:
+  - metadata:
+      name: geth-chaindata-private
+      namespace: geth
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "gp2"
+      resources:
+        requests:
+          storage: 100Gi
+  - metadata:
+      name: geth-keystore-private
+      namespace: geth
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "gp2"
+      resources:
+        requests:
+          storage: 1Gi

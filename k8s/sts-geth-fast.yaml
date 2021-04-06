@@ -33,6 +33,7 @@ spec:
       containers:
       - name: geth-fast
         image: {{image}}-fast
+        imagePullPolicy: Always
         ports:
         - containerPort: 50505
           name: custom-rpc

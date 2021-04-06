@@ -17,9 +17,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: geth-testnet-full-sts
-  namespace: geth
-  labels:
-    app: geth-full
+  namespace: geth-full
 spec:
   selector:
     matchLabels:
@@ -35,7 +33,6 @@ spec:
       containers:
       - name: geth-full
         image: {{image}}-full
-        imagePullPolicy: Always
         ports:
         - containerPort: 50505
           name: rpc
