@@ -26,7 +26,6 @@ echo "ipcpath: ${ipcpath}"
     --http.addr "0.0.0.0" \
     --ipcpath ${ipcpath} \
     --http.vhosts=* \
-    --debug \
     --verbosity 10 \
     "${additionalParams[@]}"
 

@@ -1,4 +1,4 @@
-FROM  ethereum/client-go:v1.10.1
+FROM  ethereum/client-go:v1.10.2
 
 ENV GETH_USER root
 ENV GETH_PASSWORD $GETH_PASSWORD

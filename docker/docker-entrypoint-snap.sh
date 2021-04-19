@@ -26,7 +26,6 @@ echo "ipcpath: ${ipcpath}"
     --rpcaddr "0.0.0.0" \
     --ipcpath ${ipcpath} \
     --rpcvhosts=* \
-    --debug \
     --verbosity 5 \
     --light.serve 70 \
     "${additionalParams[@]}"

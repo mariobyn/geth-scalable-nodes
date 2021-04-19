@@ -41,3 +41,21 @@ N
 docker/Dockerfile-fast-rinkeby,a/9/a9846bd708728260c28eca0ea03b4205f8be49b6
 F
 docker/Dockerfile-fast,b/e/be30bd92afa5d459f59d578ab571d24d9c934f23
+Q
+!docker/docker-entrypoint-light.sh,2/3/23aad644ed9c2093b513b3ef1251f199b78730c4
+Y
+)docker/docker-entrypoint-light-private.sh,7/f/7fc39466b600e25a87d7bb440f7d483f1b351865
+O
+docker/Dockerfile-private-light,d/6/d6d755f590e89ab3c5008a3bdfea03e066deecac
+O
+k8s/dep-geth-private-light.yaml,b/2/b2aea4b0e274b07ae9f78c10171cbee4eacfece5
+:
+
+install.sh,c/0/c0fffa6dab38719637f643131f704750033ea1a6
+F
+k8s/sts-geth-full.yaml,3/a/3ac244c12c17bd3a5833d652a006934b379b08d4
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+Z
+*k8s/private-eth-nodes/sts-private-eth.yaml,a/a/aac3fd1167dc20fc2beb5709e90da48ee8bff6f1

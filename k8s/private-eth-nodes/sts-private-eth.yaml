@@ -2,13 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   name: geth-private-sv
-  namespace: geth
+  namespace: test
   labels:
     app: geth-private
 spec:
   ports:
   - port: 50505
     name: custom-rpc
+  - port: 30303
+    name: default-rpc
   clusterIP: None
   selector:
     app: geth-private
@@ -17,7 +19,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: geth-private-sts
-  namespace: geth
+  namespace: test
   labels:
     app: geth-private
 spec:
@@ -49,7 +51,7 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: geth-chaindata-private
-      namespace: geth
+      namespace: test
     spec:
       accessModes: ["ReadWriteOnce"]
       storageClassName: "gp2"
@@ -58,7 +60,7 @@ spec:
           storage: 100Gi
   - metadata:
       name: geth-keystore-private
-      namespace: geth
+      namespace: test
     spec:
       accessModes: ["ReadWriteOnce"]
       storageClassName: "gp2"

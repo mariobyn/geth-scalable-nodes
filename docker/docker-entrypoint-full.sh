@@ -28,7 +28,6 @@ echo "ipcpath: ${ipcpath}"
     --http.addr "0.0.0.0" \
     --ipcpath ${ipcpath} \
     --http.vhosts=* \
-    --debug \
     --verbosity 5 \
     --light.serve 50 \
     "${additionalParams[@]}"

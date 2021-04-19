@@ -28,7 +28,6 @@ echo "ipcpath: ${ipcpath}"
     --rpcaddr "0.0.0.0" \
     --ipcpath ${ipcpath} \
     --rpcvhosts=* \
-    --debug \
     --verbosity 4 \
     --networkid 123456
 
