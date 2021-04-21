@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-static-peers
+  namespace: geth
+data:
+  static-nodes.json: |
