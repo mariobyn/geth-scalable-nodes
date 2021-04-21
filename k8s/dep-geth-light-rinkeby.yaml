@@ -22,6 +22,9 @@ spec:
       - name: geth-chaindata-light-testnet-rinkeby
         persistentVolumeClaim:
           claimName: geth-chaindata-light-testnet-rinkeby
+      - configMap:
+          name: cm-static-peers
+        name: geth-static-peers
       terminationGracePeriodSeconds: 10
       containers:
       - name: geth-light-rinkeby
@@ -38,6 +41,9 @@ spec:
             mountPath: /root/.ethereum/rinkeby/keystore
           - name: geth-chaindata-light-testnet-rinkeby
             mountPath: /root/.ethereum/rinkeby/geth/chaindata
+          - name: geth-static-peers
+            mountPath: /root/.ethereum/rinkeby/geth/static-nodes.json
+            subPath: static-nodes.json
         resources:
           requests:
             memory: "4Gi"

@@ -19,6 +19,9 @@ spec:
       - name: geth-keystore-testnet #used for ropsten testnet so named the volumes with testnet
         persistentVolumeClaim:
           claimName: geth-keystore-testnet
+      - configMap:
+          name: cm-static-peers
+        name: geth-static-peers
       terminationGracePeriodSeconds: 10
       containers:
       - name: geth-light-private
@@ -32,7 +35,10 @@ spec:
           name: rpc
         volumeMounts:
           - name: geth-keystore-testnet
-            mountPath: /root/.ethereum/testnet/keystore
+            mountPath: /root/.ethereum/ropsten/keystore
+          - name: geth-static-peers
+            mountPath: /root/.ethereum/ropsten/geth/static-nodes.json
+            subPath: static-nodes.json
         resources:
           requests:
             memory: "4Gi"

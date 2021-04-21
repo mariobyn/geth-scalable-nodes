@@ -41,7 +41,7 @@ spec:
           name: rpc
         volumeMounts:
         - name: geth-chaindata-testnet-fast
-          mountPath: /root/.ethereum/testnet/geth/chaindata/
+          mountPath: /root/.ethereum/ropsten/geth/chaindata/
         resources:
           requests:
             memory: "4Gi"

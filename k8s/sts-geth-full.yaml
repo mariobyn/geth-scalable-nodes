@@ -41,7 +41,7 @@ spec:
           name: rpc
         volumeMounts:
         - name: geth-chaindata-testnet-full
-          mountPath: /root/.ethereum/testnet/geth/chaindata/
+          mountPath: /root/.ethereum/ropsten/geth/chaindata/
   volumeClaimTemplates:
   - metadata:
       name: geth-chaindata-testnet-full
